@@ -1,0 +1,1 @@
+export const UTEC_VENTURES = "https://static.younoodle.com/pictures/d5/3e/9a/parent_53e281b326ab56_27472061.jpg";
