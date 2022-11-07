@@ -1,31 +1,37 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, useEffect, useState } from 'react';
-import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import React, { createContext, useState } from 'react';
 
 export const AuthContext = createContext();
-export const AuthProvider = ({children}) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [userToken, setUserToken] = useState(null);
-  const {authorize, clearSession, user} = useAuth0();
+export const AuthProvider = ({ children }) => {
 
-  const logIn = async () => {
-    try {
-      await authorize({scope: 'openid profile email'});
-    } catch (e) {
-      console.log(e);
-    } 
+  const [isLoading, setIsLoading] = useState(false);
+  const [userToken, setUserToken] = useState("Hello world");
+  const [isFirst, setIsFirst] = useState(false);
+  const signIn = (email, password) => {
+    let accessToken = AsyncStorage.getItem('accessToken');
+    if (!accessToken) return accessToken;
+    setIsLoading(true);
+    let token = "12";
+    setUserToken(token);
+    AsyncStorage.setItem('acessToken', token);
+    setIsLoading(false);
   }
-  const logOut = async () => {
-    try {
-      await authorize({scope: 'openid profile email'});
-    } catch (e) {
-      console.log(e);
-    } 
+
+  const signOut = async () => {
+    AsyncStorage.removeItem('acessToken');
+    setUserToken(null);
   }
-  const loggedIn = user !== undefined && user !== null;
+
+  const signUp = async () => {
+    setIsLoading(true);
+    let token = "12asa"
+    AsyncStorage.setItem('acessToken', token);
+    setIsLoading(false);
+  }
+
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut, isLoading, userToken}}>
-        {children}
+    <AuthContext.Provider value={{ signIn, signOut, signUp, isLoading, userToken, isFirst}}>
+      {children}
     </AuthContext.Provider>
   )
 }
