@@ -60,7 +60,7 @@ const items = [
 const SettingsScreen = () => {
   return (
     <SafeAreaView>
-      <Text style={styles.body}>Settings</Text>
+      {/* <Text style={styles.body}>Settings</Text> */}
       <ProfileItem/>
       {
         items.map(
